@@ -3,9 +3,36 @@
 <head>
 <script>
 
-
+  async function createWebAssembly(path, importObject) {
+    const result = await window.fetch(path);
+    const bytes = await result.arrayBuffer();
+    return WebAssembly.instantiate(bytes, importObject);
+  }
 // Add code inside the script tag.
+  const memory = new WebAssembly.Memory({initial: 256, maximum: 256});
+  let exports = null;
 
+  async function init() {
+    const env = {
+      'abortStackOverflow': _ => { throw new Error('overflow'); },
+      'table': new WebAssembly.Table({initial: 0, maximum: 0, element: 'anyfunc'}),
+      'tableBase': 0,
+      'memory': memory,
+      'memoryBase': 1024,
+      'STACKTOP': 0,
+      'STACK_MAX': memory.buffer.byteLength,
+    };
+    const importObject = {env};
+
+    // TODO: do something with importObject
+  }
+  init();
+      const wa = await createWebAssembly('output.wasm', importObject);
+    exports = wa.instance.exports;
+    console.info('got exports', exports);
+    exports._board_init();  // setup lyff board
+
+    // TODO: interact with lyff board
 </script>
 </head>
 <body>
