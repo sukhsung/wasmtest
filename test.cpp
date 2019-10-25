@@ -1,6 +1,14 @@
-#define WASM_EXPORT __attribute__((visibility("default")))
+// Copyright 2012 The Emscripten Authors.  All rights reserved.
+// Emscripten is available under two separate licenses, the MIT license and the
+// University of Illinois/NCSA Open Source License.  Both these licenses can be
+// found in the LICENSE file.
 
-WASM_EXPORT
-int add(int num1, int num2) {
-  return num1+num2;
+#include <math.h>
+
+extern "C" {
+
+int add(int x, int y) {
+  return x+y;
+}
+
 }
