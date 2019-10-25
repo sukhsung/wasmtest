@@ -36,9 +36,9 @@ var image = makeTestImage(numPx)
 
 drawGrayscaleBitmap(ctx,image._data);
 
-// WebAssembly.instantiateStreaming(fetch('../out/main.wasm'))
-// .then(obj => {
-//   // Call an exported function:
-//   console.log(obj.instance.exports.add(40,2));
-// })
+WebAssembly.instantiateStreaming(fetch('test.wasm'))
+.then(obj => {
+  // Call an exported function:
+  console.log(obj.instance.exports.add(40,2));
+})
 
